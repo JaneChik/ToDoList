@@ -1,26 +1,3 @@
-# task_list = []
-#
-# def new_list():
-#     task_list = []
-#
-# def new_task(task: str):
-#     task_list.append(task)
-#
-# def show_list():
-#     for i in range(len(task_list)):
-#         print(str(i+1)+'. '+task_list[i])
-#
-# def delete_task(number: int):
-#     task_list.remove(task_list[number-1])
-#
-# def task_done(number: int):
-#     task_list[number-1] += ' DONE'
-#
-# def tasks_to_do():
-#     for i in range(len(task_list)):
-#         if 'DONE' not in task_list[i]:
-#             print(str(i+1)+'. '+task_list[i])
-
 import re
 
 
