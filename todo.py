@@ -1,11 +1,41 @@
 import re
+import os
 
-
-def start():
+def start(path_to_file):
     global all_lists
     all_lists = {}
     global name
     name = str
+    global file
+    file = path_to_file
+    if os.path.exists(file):
+        with open(file, 'r') as database:
+            if os.path.getsize(file) > 0:
+                for line in database:
+                    key, value = line.strip().split('*and*')
+                    value_2 = []
+                    if value == '[]':
+                        value_2 = []
+                    else:
+                        for item in value.split('\t'):
+                            value_2.append(item)
+                    all_lists[key] = value_2
+    else:
+        with open(file, 'w') as database:
+            pass
+
+
+def save_and_close():
+    with open(file, 'w') as file_data:
+        for elem in all_lists:
+            line_2 = ''
+            if all_lists[elem] == []:
+                line_2 += '[]'
+            else:
+                for item in all_lists[elem]:
+                    line_2 += item + '\t'
+            line = str(elem)+'*and*'+line_2+'\n'
+            file_data.write(line)
 
 
 def new_list(*names: str):
@@ -133,18 +163,19 @@ def tasks_to_do():
 
 
 def info(command = None):
-    inform = {'start': 'before working with lists',
-                  'new_list(name of the list)': 'create new todo-list', 
-                  'delete_list(name of list)': 'delete specified todo-list',
-                  'all_my_lists': 'print all your existing lists', 
-                  'all_my_lists_t': 'print all your lists with all tasks',
-                  'work_with(list)': 'specifies the list you want to work with now', 
-                  'new_task(your new task)': 'add new task to the list',
-                  'delete_task(task number)': 'delete this task', 
-                  'show_list': 'print all your tasks from this list',
-                  'task_done(task number)': 'mark task as DONE, if all done ask if you want to delete this list',
-                  'tasks_to_do': 'print all tasks that are undone yet',
-                  'timeline': 'see how much time you have before deadline for each undone task'}
+    inform = {'start': 'before working with lists, specify path to txt-file as database (existing or create new)',
+              'new_list(name of the list)': 'create new todo-list',
+              'delete_list(name of list)': 'delete specified todo-list',
+              'all_my_lists': 'print all your existing lists',
+              'all_my_lists_t': 'print all your lists with all tasks',
+              'work_with(list)': 'specifies the list you want to work with now',
+              'new_task(your new task)': 'add new task to the list',
+              'delete_task(task number)': 'delete this task',
+              'show_list': 'print all your tasks from this list',
+              'task_done(task number)': 'mark task as DONE, if all done ask if you want to delete this list',
+              'tasks_to_do': 'print all tasks that are undone yet',
+              'timeline': 'see how much time you have before deadline for each undone task',
+              'save_and_close': 'save your progress in txt file, no arguments needed'}
     if command is not None:
         print(command + ': ' + inform[command])
     else:
