@@ -1,4 +1,5 @@
 # ToDoList
+### Module for creating and working with todo-lists
 
 To start working first **todo.start**(*path_to_txt_file*) function need to be speciefied.
 
